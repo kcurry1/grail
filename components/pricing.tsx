@@ -9,7 +9,7 @@ const plans = [
     price: "$0",
     period: "forever",
     commission: "12%",
-    features: ["Up to 25 active listings", "Basic seller tools", "Email support", "Standard payouts"],
+    features: ["50 active listings/month", "Basic seller tools", "Email support", "Standard payouts"],
     popular: false,
   },
   {
@@ -40,12 +40,12 @@ const plans = [
 
 export function Pricing() {
   return (
-    <section className="py-24 px-4 bg-card/50">
+    <section className="py-16 px-4 bg-card/50">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl md:text-5xl font-bold text-center mb-4 text-balance">
           Plans for every seller
         </h2>
-        <p className="text-muted-foreground text-center mb-16 text-lg">
+        <p className="text-muted-foreground text-center mb-10 text-lg">
           Start free, upgrade as you grow
         </p>
 

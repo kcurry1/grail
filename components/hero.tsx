@@ -6,7 +6,7 @@ export async function Hero() {
   const count = await getWaitlistCount()
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-16">
       {/* Animated gradient background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-background" />
@@ -19,7 +19,7 @@ export async function Hero() {
           Find your <RotatingText />
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 text-pretty">
-          The card marketplace that puts sellers first. Lower fees. Better tools. Support that actually helps.
+          The sports card marketplace that puts sellers first. Lower fees. Better tools. Support that actually helps.
         </p>
 
         <div className="mb-6">

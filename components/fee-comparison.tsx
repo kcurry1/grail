@@ -1,11 +1,11 @@
 export function FeeComparison() {
   return (
-    <section className="py-24 px-4">
+    <section className="py-16 px-4">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl md:text-5xl font-bold text-center mb-4 text-balance">
           Keep more of what you earn
         </h2>
-        <p className="text-muted-foreground text-center mb-16 text-lg">
+        <p className="text-muted-foreground text-center mb-10 text-lg">
           See how much more you could make selling on Grail
         </p>
 

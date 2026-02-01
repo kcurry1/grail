@@ -3,6 +3,7 @@
 import React from "react"
 
 import { useState, useTransition } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { joinWaitlist } from "@/app/actions/waitlist"
@@ -10,13 +11,15 @@ import { Loader2 } from "lucide-react"
 
 interface WaitlistFormProps {
   onSuccess?: () => void
+  redirectOnSuccess?: boolean
 }
 
-export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
+export function WaitlistForm({ onSuccess, redirectOnSuccess = true }: WaitlistFormProps) {
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
   const [isSuccess, setIsSuccess] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const router = useRouter()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,6 +32,9 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
       if (result.success) {
         setEmail("")
         onSuccess?.()
+        if (redirectOnSuccess) {
+          router.push("/preview")
+        }
       }
     })
   }

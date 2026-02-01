@@ -2,7 +2,7 @@ import { WaitlistForm } from "@/components/waitlist-form"
 
 export function FinalCTA() {
   return (
-    <section className="py-24 px-4 relative overflow-hidden">
+    <section className="py-16 px-4 relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-background to-background" />
@@ -13,7 +13,7 @@ export function FinalCTA() {
         <h2 className="text-3xl md:text-5xl font-bold mb-4 text-balance">
           Ready to sell smarter?
         </h2>
-        <p className="text-muted-foreground text-lg mb-10">
+        <p className="text-muted-foreground text-lg mb-8">
           Join the waitlist and be the first to know when we launch.
         </p>
 
