@@ -1,36 +1,9 @@
-"use client"
+import { WaitlistForm } from "@/components/waitlist-form"
+import { RotatingText } from "@/components/rotating-text"
+import { getWaitlistCount } from "@/app/actions/waitlist"
 
-import React from "react"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { addToWaitlist } from "@/lib/supabase"
-
-export function Hero() {
-  const [email, setEmail] = useState("")
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-
-    setIsLoading(true)
-    setError("")
-
-    try {
-      await addToWaitlist(email, "hero")
-      setIsSubmitted(true)
-      setEmail("")
-    } catch (err) {
-      setError("Something went wrong. Please try again.")
-      console.error(err)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+export async function Hero() {
+  const count = await getWaitlistCount()
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20">
@@ -42,37 +15,19 @@ export function Hero() {
       </div>
 
       <div className="max-w-4xl mx-auto text-center">
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-balance">
-          Find your <span className="text-primary">grail.</span>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+          Find your <RotatingText />
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 text-pretty">
           The card marketplace that puts sellers first. Lower fees. Better tools. Support that actually helps.
         </p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-6">
-          <Input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="h-12 bg-card border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-primary"
-            required
-          />
-          <Button 
-            type="submit" 
-            disabled={isLoading}
-            className="h-12 px-8 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? "Joining..." : isSubmitted ? "You're in!" : "Join the Waitlist"}
-          </Button>
-        </form>
-
-        {error && (
-          <p className="text-sm text-red-500 mb-2">{error}</p>
-        )}
+        <div className="mb-6">
+          <WaitlistForm />
+        </div>
 
         <p className="text-sm text-muted-foreground">
-          Join <span className="text-primary font-medium">2,847</span> collectors already waiting
+          Join <span className="text-primary font-medium">{count.toLocaleString()}</span> collectors already waiting
         </p>
       </div>
     </section>
