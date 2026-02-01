@@ -2,11 +2,10 @@
 
 import React from "react"
 
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { joinWaitlist } from "@/app/actions/waitlist"
 import { Loader2 } from "lucide-react"
 
 interface WaitlistFormProps {
@@ -18,17 +17,27 @@ export function WaitlistForm({ onSuccess, redirectOnSuccess = true }: WaitlistFo
   const [email, setEmail] = useState("")
   const [message, setMessage] = useState("")
   const [isSuccess, setIsSuccess] = useState(false)
-  const [isPending, startTransition] = useTransition()
+  const [isPending, setIsPending] = useState(false)
   const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email) return
+    if (!email || isPending) return
 
-    startTransition(async () => {
-      const result = await joinWaitlist(email)
+    setIsPending(true)
+    setMessage("")
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      })
+
+      const result = await response.json()
       setMessage(result.message)
       setIsSuccess(result.success)
+
       if (result.success) {
         setEmail("")
         onSuccess?.()
@@ -36,7 +45,12 @@ export function WaitlistForm({ onSuccess, redirectOnSuccess = true }: WaitlistFo
           router.push("/preview")
         }
       }
-    })
+    } catch (error) {
+      setMessage("Something went wrong. Please try again.")
+      setIsSuccess(false)
+    } finally {
+      setIsPending(false)
+    }
   }
 
   return (

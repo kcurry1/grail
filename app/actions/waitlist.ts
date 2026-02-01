@@ -10,6 +10,11 @@ export async function joinWaitlist(email: string): Promise<{ success: boolean; m
   try {
     const supabase = await createClient()
 
+    if (!supabase) {
+      console.error("Supabase not configured")
+      return { success: false, message: "Something went wrong. Please try again." }
+    }
+
     const { error } = await supabase
       .from("waitlist")
       .insert({ email: email.toLowerCase().trim() })
@@ -32,6 +37,10 @@ export async function joinWaitlist(email: string): Promise<{ success: boolean; m
 export async function getWaitlistCount(): Promise<number> {
   try {
     const supabase = await createClient()
+
+    if (!supabase) {
+      return 2847 // Return base count if Supabase not configured
+    }
     
     const { count, error } = await supabase
       .from("waitlist")
